@@ -1,47 +1,55 @@
-# Spin the Bottle
+# 🍾 Spin The Bottle
 
-A mobile-first virtual bottle spinner. Tap the bottle, it spins with real
-momentum and friction, and stops on a genuinely random direction. No Truth,
-no Dare, no players — just the spin.
+A simple, realistic, and mobile-friendly **virtual Spin The Bottle game** designed for Truth or Dare games.
 
-## Run it
+Tap the bottle or press the **SPIN** button, watch it rotate through multiple rounds, and let it randomly stop at a direction.
 
-```bash
-npm install
-npm run dev
-```
+## 🎮 Demo
 
-Open the printed local URL on your phone (same Wi-Fi network) or in a mobile
-device emulator. For an installable build:
+🔗 **Live Demo:**  
+https://ravitejaatthiraju.github.io/Spin-The-Bottle/
 
-```bash
-npm run build
-npm run preview
-```
+## ✨ Features
 
-## How the spin works
+- 🍾 Realistic virtual bottle spinning
+- 🎲 Random stopping direction
+- 🔄 Multiple complete rotations
+- 📱 Mobile-friendly responsive design
+- 👆 Tap the bottle to spin
+- 🖱️ Click the Spin button to spin
+- 📳 Haptic feedback on supported mobile devices
+- ⚡ Lightweight and fast
+- 🚫 No login or registration required
+- 🌐 Works directly in the browser
+- 📦 No frameworks or dependencies
 
-`src/utils/bottlePhysics.js` integrates an angular velocity curve frame by
-frame with `requestAnimationFrame`:
+## 🕹️ How to Play
 
-1. **Accelerate** — velocity ramps up as if released by a hand.
-2. **Fast rotation** — holds near-peak angular velocity.
-3. **Decelerate** — cubic ease-out, friction taking over.
-4. **Settle** — a few small damped oscillations before it truly stops.
+1. Open the game.
+2. Gather your friends for a Truth or Dare game.
+3. Tap the bottle or press **SPIN**.
+4. Wait while the bottle spins.
+5. The bottle randomly stops in a direction.
+6. The person the bottle points toward gets the turn.
 
-Rotation count (5–12 turns) and final resting angle are randomized on every
-call, so the target degrees — and therefore the peak velocity needed to
-reach them in the randomized duration — differ each spin. The bottle's
-rotation is written directly to the DOM node's `transform` via a ref, so a
-60fps spin never triggers a React re-render.
+That's it — **spin and let the bottle decide!** 🍾
 
-## Design
+## 🛠️ Technologies Used
 
-Speakeasy-bar palette: dark walnut table, brass ring, amber glass bottle.
-The brass compass ring around the bottle is the signature element — its tick
-marks give the stopping direction real visual meaning, and the nearest tick
-glows briefly when the bottle settles.
+This project is intentionally built with simple web technologies:
 
-Sound effects (tap, spin whoosh, stop thud) are synthesized live with the
-Web Audio API — no audio files to ship. Haptics use the Vibration API where
-supported and no-op silently elsewhere (e.g. iOS Safari).
+- **HTML5** — Application structure
+- **CSS3** — Responsive UI, animations, and visual design
+- **JavaScript** — Bottle rotation, randomization, and interaction
+- **GitHub Pages** — Hosting and deployment
+
+## 📁 Project Structure
+
+```text
+Spin-The-Bottle/
+│
+├── index.html      # Main application
+├── style.css       # UI and responsive styling
+├── script.js       # Bottle spinning logic
+└── README.md       # Project documentation
+
