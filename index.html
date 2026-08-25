@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>Spin The Bottle</title>
+  <meta
+    name="description"
+    content="A simple virtual bottle spinner for Truth or Dare games."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=EB+Garamond:ital,wght@0,500;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <header>
+      <p class="eyebrow">Est. Tonight</p>
+      <h1>Spin the Bottle</h1>
+      <p class="subtitle">Truth &amp; Dare</p>
+    </header>
+
+    <main>
+      <div class="game-area" id="gameArea">
+
+        <!-- Table -->
+        <div class="table-circle"></div>
+
+        <!-- Pointer -->
+        <div class="pointer"></div>
+        <div class="pointer-glow"></div>
+
+        <!-- Bottle -->
+        <div class="bottle-container">
+
+          <!-- Landing sparks -->
+          <div class="spark-ring" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+
+          <div id="bottle" class="bottle">
+            <div class="bottle-neck"></div>
+            <div class="bottle-body">
+              <div class="bottle-shine"></div>
+              <div class="bottle-highlight"></div>
+              <div class="bottle-label">
+                <span>Spin</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p id="status">Tap the bottle, or the button below</p>
+
+      <button id="spinButton" type="button">
+        <span>Spin the Bottle</span>
+      </button>
+    </main>
+
+    <footer>
+      <span class="footer-icon">🍾</span>
+      <span>Let the bottle decide</span>
+    </footer>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,632 @@
+/* -----------------------------
+   TOKENS
+----------------------------- */
+
+:root {
+  --bg-1: #241713;
+  --bg-2: #120c0a;
+  --bg-3: #060403;
+
+  --felt-1: #12492f;
+  --felt-2: #0b3120;
+  --felt-3: #071f15;
+
+  --brass-1: #f3d38f;
+  --brass-2: #d9a94f;
+  --brass-3: #a97a2c;
+  --brass-4: #6e4e1b;
+
+  --cream: #f4e8ce;
+  --muted: #b7a793;
+  --muted-dim: #7c6e5e;
+
+  --glass-1: #5cb079;
+  --glass-2: #2c7d4b;
+  --glass-3: #164a2c;
+  --glass-4: #0c2f1c;
+
+  --display-font: "Cinzel", "Georgia", serif;
+  --body-font: "EB Garamond", "Georgia", serif;
+
+  --shadow-deep: 0 30px 60px rgba(0, 0, 0, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: var(--body-font);
+  background:
+    radial-gradient(ellipse 120% 70% at 50% -10%, rgba(217, 169, 79, 0.08), transparent 55%),
+    radial-gradient(circle at 50% 42%, var(--bg-1) 0%, var(--bg-2) 55%, var(--bg-3) 100%);
+  color: var(--cream);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* faint vignette + grain-like noise for atmosphere */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.app {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  min-height: 520px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: max(28px, env(safe-area-inset-top)) 20px max(18px, env(safe-area-inset-bottom));
+  z-index: 2;
+}
+
+/* -----------------------------
+   HEADER
+----------------------------- */
+
+header {
+  text-align: center;
+  z-index: 5;
+  flex-shrink: 0;
+}
+
+.eyebrow {
+  font-family: var(--body-font);
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--brass-3);
+  margin-bottom: 6px;
+}
+
+header h1 {
+  font-family: var(--display-font);
+  font-weight: 700;
+  font-size: clamp(21px, 6.4vw, 32px);
+  letter-spacing: 3px;
+  line-height: 1.15;
+
+  background: linear-gradient(180deg, var(--brass-1) 10%, var(--brass-2) 55%, var(--brass-3) 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.4));
+}
+
+header .subtitle {
+  margin-top: 8px;
+  font-family: var(--body-font);
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+header .subtitle::before,
+header .subtitle::after {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  vertical-align: middle;
+  background: var(--brass-3);
+  margin: 0 8px 2px;
+}
+
+/* -----------------------------
+   GAME AREA
+----------------------------- */
+
+main {
+  width: 100%;
+  max-width: 600px;
+
+  flex: 1;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-area {
+  position: relative;
+
+  width: min(84vw, 460px);
+  height: min(84vw, 460px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Table */
+
+.table-circle {
+  position: absolute;
+  inset: 0;
+
+  border-radius: 50%;
+
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(0, 0, 0, 0.16) 0deg 1.2deg,
+      transparent 1.2deg 9deg
+    ),
+    radial-gradient(circle at 50% 50%, var(--felt-1) 0%, var(--felt-2) 55%, var(--felt-3) 100%);
+
+  box-shadow:
+    0 0 0 1px rgba(217, 169, 79, 0.25),
+    0 0 0 9px var(--bg-3),
+    0 0 0 11px rgba(217, 169, 79, 0.45),
+    inset 0 0 70px rgba(0, 0, 0, 0.6),
+    inset 0 18px 50px rgba(0, 0, 0, 0.4),
+    var(--shadow-deep);
+}
+
+/* brass tick ring */
+.table-circle::before {
+  content: "";
+  position: absolute;
+  inset: 7%;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(
+      var(--brass-2) 0deg 0.55deg,
+      transparent 0.55deg 15deg
+    );
+  -webkit-mask: radial-gradient(circle, transparent 92%, #000 93%, #000 96%, transparent 97%);
+          mask: radial-gradient(circle, transparent 92%, #000 93%, #000 96%, transparent 97%);
+  opacity: 0.55;
+}
+
+/* soft spotlight overhead */
+.table-circle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 32%, rgba(255, 244, 214, 0.16), transparent 60%);
+  pointer-events: none;
+}
+
+/* Pointer */
+
+.pointer {
+  position: absolute;
+
+  top: -1%;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 0;
+  height: 0;
+
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 22px solid var(--brass-1);
+
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.6));
+
+  z-index: 10;
+}
+
+.pointer-glow {
+  position: absolute;
+  top: -3%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(243, 211, 143, 0.5), transparent 70%);
+  z-index: 9;
+  pointer-events: none;
+}
+
+/* -----------------------------
+   BOTTLE
+----------------------------- */
+
+.bottle-container {
+  position: relative;
+
+  width: 280px;
+  height: 280px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 5;
+}
+
+.bottle {
+  position: relative;
+
+  width: 208px;
+  height: 96px;
+
+  transform-origin: center center;
+  transform: rotate(0deg);
+
+  filter: drop-shadow(0 20px 16px rgba(0, 0, 0, 0.55));
+
+  will-change: transform;
+}
+
+/* Bottle body */
+
+.bottle-body {
+  position: absolute;
+  overflow: hidden;
+
+  left: 18px;
+  top: 14px;
+
+  width: 172px;
+  height: 68px;
+
+  border-radius: 46% 36% 36% 46%;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--glass-1) 0%,
+      var(--glass-2) 38%,
+      var(--glass-3) 70%,
+      var(--glass-4) 100%
+    );
+
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+
+  box-shadow:
+    inset 8px 6px 16px rgba(255, 255, 255, 0.18),
+    inset -12px -10px 20px rgba(0, 0, 0, 0.45);
+}
+
+.bottle-shine {
+  position: absolute;
+  left: -10%;
+  top: -20%;
+  width: 45%;
+  height: 140%;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0.28), transparent 60%);
+  transform: skewX(-12deg);
+}
+
+/* Bottle neck */
+
+.bottle-neck {
+  position: absolute;
+
+  left: 0;
+  top: 32px;
+
+  width: 52px;
+  height: 32px;
+
+  border-radius: 12px 4px 4px 12px;
+
+  background: linear-gradient(180deg, var(--glass-1), var(--glass-3));
+
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+
+  box-shadow:
+    inset 5px 3px 8px rgba(255, 255, 255, 0.14),
+    inset -5px -4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Cork */
+
+.bottle-neck::before {
+  content: "";
+
+  position: absolute;
+
+  left: -8px;
+  top: 4px;
+
+  width: 13px;
+  height: 24px;
+
+  border-radius: 3px;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #d9c99a 0 2px,
+      #b39c6c 2px 4px
+    );
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+}
+
+/* Bottle highlight */
+
+.bottle-highlight {
+  position: absolute;
+
+  left: 26px;
+  top: 7px;
+
+  width: 88px;
+  height: 12px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.16);
+
+  transform: rotate(-4deg);
+}
+
+/* Bottle label — wax-seal medallion */
+
+.bottle-label {
+  position: absolute;
+
+  right: 24px;
+  top: 12px;
+
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(circle at 35% 30%, var(--brass-1), var(--brass-2) 55%, var(--brass-4) 100%);
+
+  border: 1.5px solid rgba(0, 0, 0, 0.25);
+
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.5),
+    inset 0 -3px 4px rgba(0, 0, 0, 0.25);
+}
+
+.bottle-label span {
+  font-family: var(--display-font);
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #3a2a10;
+}
+
+/* Landing sparks */
+
+.spark-ring {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.spark-ring span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brass-1);
+  box-shadow: 0 0 6px 1px rgba(243, 211, 143, 0.8);
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(var(--a)) translateX(0);
+}
+
+.spark-ring span:nth-child(1) { --a: 0deg; }
+.spark-ring span:nth-child(2) { --a: 45deg; }
+.spark-ring span:nth-child(3) { --a: 90deg; }
+.spark-ring span:nth-child(4) { --a: 135deg; }
+.spark-ring span:nth-child(5) { --a: 180deg; }
+.spark-ring span:nth-child(6) { --a: 225deg; }
+.spark-ring span:nth-child(7) { --a: 270deg; }
+.spark-ring span:nth-child(8) { --a: 315deg; }
+
+.game-area.is-landed .spark-ring span {
+  animation: spark-burst 0.7s ease-out forwards;
+}
+
+@keyframes spark-burst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateX(6px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateX(120px);
+  }
+}
+
+/* -----------------------------
+   STATUS
+----------------------------- */
+
+#status {
+  margin-top: 18px;
+
+  min-height: 20px;
+
+  font-family: var(--body-font);
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+
+  color: var(--muted);
+
+  text-align: center;
+}
+
+/* -----------------------------
+   BUTTON
+----------------------------- */
+
+#spinButton {
+  margin-top: 22px;
+
+  width: min(85vw, 320px);
+  height: 58px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: linear-gradient(150deg, var(--brass-1) 0%, var(--brass-2) 55%, var(--brass-3) 100%);
+
+  color: #2b1d0b;
+
+  font-family: var(--display-font);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  touch-action: manipulation;
+
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.12s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+#spinButton:active {
+  transform: scale(0.94);
+  filter: brightness(0.97);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+#spinButton:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 3px;
+}
+
+#spinButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* -----------------------------
+   FOOTER
+----------------------------- */
+
+footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+
+  color: var(--muted-dim);
+
+  font-family: var(--body-font);
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.footer-icon {
+  font-size: 13px;
+}
+
+/* -----------------------------
+   REDUCED MOTION
+----------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .spark-ring span {
+    animation: none !important;
+  }
+  #spinButton {
+    transition: none;
+  }
+}
+
+/* -----------------------------
+   MOBILE
+----------------------------- */
+
+@media (max-width: 500px) {
+
+  .app {
+    padding-top: max(22px, env(safe-area-inset-top));
+  }
+
+  .game-area {
+    width: 92vw;
+    height: 92vw;
+  }
+
+  .bottle-container {
+    transform: scale(0.84);
+  }
+
+  #spinButton {
+    height: 54px;
+  }
+}
+
+@media (max-height: 680px) {
+
+  .eyebrow {
+    display: none;
+  }
+
+  .game-area {
+    transform: scale(0.8);
+  }
+
+  #status {
+    margin-top: 4px;
+  }
+
+  #spinButton {
+    margin-top: 10px;
+  }
+}
+
+@media (max-height: 560px) {
+  header .subtitle {
+    display: none;
+  }
+}
